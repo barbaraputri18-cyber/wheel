@@ -6,6 +6,8 @@
 .env
 .env.backup
 /ASSETS/env
+/.deploy-keys/
+/deployment/client-proxy/httpd_config.client.conf
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
