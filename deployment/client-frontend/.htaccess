@@ -1,0 +1,14 @@
+RewriteEngine On
+DirectoryIndex index.html
+
+RewriteRule ^index\.php$ index.html [L]
+
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/
+RewriteRule ^(?:api|admin|login|logout|password|uploads)(?:/|$) gateway.php [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+RewriteRule ^$ index.html [L]
+RewriteRule ^ gateway.php [L,QSA]

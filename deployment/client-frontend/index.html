@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Spin Berkat</title>
+  <link id="favicon" rel="icon" href="/default/favicon.ico">
+  <link rel="stylesheet" href="/assets/wheel/css/styles.css">
+  <link rel="stylesheet" href="/assets/wheel/css/animasi.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prompt:wght@500;700;800&family=Public+Sans:wght@300;400;700&display=swap">
+  <style>
+    body { background-color:#000; background-position:center; background-size:cover; background-repeat:no-repeat; background-attachment:fixed; }
+    .wheelText { font-size:16px; font-family:'Prompt',sans-serif; font-weight:900; text-align:center; color:aqua; }
+    .logo-mobile { display:none!important; }
+    .action-button { font-size:22px; width:100%; padding:5px 15px; border:0; border-radius:30px; box-shadow:2px 2px 2px grey; font-weight:700; }
+    .action-gold { background:linear-gradient(to bottom,#ecad00 16%,#ffd563 44%,#ecad00 99%); color:#000; }
+    .action-blue { background:#02abff; color:#000; }
+    .popup-container { display:none; width:100%; height:100%; position:fixed; z-index:1000; background:#080808b0; inset:0; }
+    .popup-body { width:min(92%,420px); max-height:80vh; margin:5vh auto; overflow:auto; background:#313131; color:#fff; }
+    .popup-header { padding:12px; background:#754116; }
+    .popup-close { cursor:pointer; float:right; width:36px; height:36px; padding:5px; border-radius:50%; background:#fff; color:#000; }
+    #loading { color:#fff; padding:24px; }
+    #app-error { display:none; }
+    @media (max-width:768px) { .logo-pc{display:none!important}.logo-mobile{display:block!important;width:80%;margin-top:10px} }
+  </style>
+</head>
+<body class="text-center">
+  <div class="container">
+    <div class="row h-100 mx-auto">
+      <a href="/" class="w-100"><img id="logo-mobile" alt="Spin Berkat" class="mx-auto img-fluid logo-mobile"></a>
+      <div class="col-sm-7 my-auto p-0"><div id="chart"></div></div>
+      <div class="col-sm-5 my-auto">
+        <div class="container px-4">
+          <a href="/"><img id="logo-pc" alt="Spin Berkat" class="mx-auto d-block img-fluid logo-pc"></a>
+          <div id="loading">Memuat wheel...</div>
+          <div id="app-error" class="alert alert-danger"></div>
+          <div id="wheel-controls" style="display:none">
+            <audio id="home-audio" loop hidden></audio>
+            <p class="h4 mb-4 font-weight-normal text-white">Masukkan Kode Tiket:</p>
+            <form id="draw-form">
+              <div class="form-group"><input id="nama" name="nama" class="form-control form-control-lg" placeholder="Username" required></div>
+              <div class="form-group"><input id="code" name="code" class="form-control form-control-lg" placeholder="Code / Voucher" required></div>
+              <div class="row">
+                <div class="col-md-6 mt-3"><button id="spin-button" class="action-button action-gold" type="submit">SPIN</button></div>
+                <div class="col-md-6 mt-3"><button class="action-button action-gold" type="button" id="history-button">RIWAYAT</button></div>
+              </div>
+            </form>
+            <div class="mt-3"><button class="action-button action-gold" type="button" id="terms-button">Syarat &amp; Ketentuan</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="history-popup" class="popup-container">
+    <div class="popup-body">
+      <div class="popup-header"><span id="history-close" class="popup-close">×</span><strong>RIWAYAT SPIN</strong></div>
+      <div class="p-3"><table class="w-100"><thead><tr><th>NO</th><th>NAME</th><th>PRIZE</th></tr></thead><tbody id="history-container"></tbody></table></div>
+    </div>
+  </div>
+
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-ease@3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="/assets/wheel/js/confetti.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

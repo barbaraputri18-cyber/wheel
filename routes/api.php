@@ -18,4 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('prize','PrizeController@apiPrize');
+Route::middleware('wheel.client')->prefix('client')->group(function () {
+    Route::get('bootstrap', 'ClientApiController@bootstrap');
+    Route::get('history', 'ClientApiController@history');
+    Route::post('draw', 'ClientApiController@draw');
+});

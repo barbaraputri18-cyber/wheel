@@ -146,7 +146,11 @@ function spin(url, r) {
 
             oldrotation = rotation;
             console.log('finished!', rotation);
-            window.location.href = url;
+            if (typeof url === 'function') {
+                url();
+            } else {
+                window.location.href = url;
+            }
         });
 }
 
@@ -181,4 +185,3 @@ function rotIntro(to) {
         return "rotate(" + i(t) + ")";
     };
 }
-
