@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 const UPSTREAM_ORIGIN = 'https://undianspin.com';
+const UPSTREAM_BASE_PATH = '/spinberkat';
 const PUBLIC_ORIGIN = 'https://spinberkat.com';
 
 $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
@@ -19,7 +20,7 @@ if (preg_match('#^/(admin|login|logout|password)(?:/|$)#i', $requestPath)) {
     exit('Not Found');
 }
 
-$upstreamUrl = UPSTREAM_ORIGIN . $requestUri;
+$upstreamUrl = UPSTREAM_ORIGIN . UPSTREAM_BASE_PATH . $requestUri;
 $method = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
 $responseHeaders = [];
 $contentType = '';
@@ -124,8 +125,18 @@ foreach ($responseHeaders as [$name, $value]) {
 
     if (strcasecmp($name, 'Location') === 0 || strcasecmp($name, 'Set-Cookie') === 0) {
         $value = str_ireplace(
-            ['https://undianspin.com', 'http://undianspin.com', 'domain=undianspin.com'],
-            ['https://spinberkat.com', 'https://spinberkat.com', 'domain=spinberkat.com'],
+            [
+                'https://undianspin.com/spinberkat',
+                'http://undianspin.com/spinberkat',
+                '//undianspin.com/spinberkat',
+                'domain=undianspin.com',
+            ],
+            [
+                'https://spinberkat.com',
+                'https://spinberkat.com',
+                '//spinberkat.com',
+                'domain=spinberkat.com',
+            ],
             $value
         );
     }
@@ -136,11 +147,14 @@ foreach ($responseHeaders as [$name, $value]) {
 $isTextResponse = preg_match('#^(text/|application/(json|javascript|xml|xhtml\+xml))#i', $contentType) === 1;
 if ($isTextResponse && is_string($body)) {
     $body = str_ireplace(
-        ['https://undianspin.com', 'http://undianspin.com', '//undianspin.com'],
+        [
+            'https://undianspin.com/spinberkat',
+            'http://undianspin.com/spinberkat',
+            '//undianspin.com/spinberkat',
+        ],
         ['https://spinberkat.com', 'https://spinberkat.com', '//spinberkat.com'],
         $body
     );
 }
 
 echo $body;
-
