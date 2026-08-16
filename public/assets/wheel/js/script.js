@@ -141,20 +141,33 @@ function spin(url, r) {
     playSound();
 
     vis.transition()
-        .duration(9000)
+        .duration(13000)
+        .ease("cubic-in-out")
         .attrTween("transform", rotTween)
         .each("end", function () {
-            d3.select(".slice:nth-child(" + (picked + 2) + ") path")
-                .attr("fill-opacity","0.5")
-                .attr("fill", "#e9e9e9");
+            var settleRotation = rotation + (rotation >= oldrotation ? 2 : -2);
 
-            oldrotation = rotation;
-            console.log('finished!', rotation);
-            if (typeof url === 'function') {
-                url();
-            } else {
-                window.location.href = url;
-            }
+            vis.transition()
+                .duration(160)
+                .ease("cubic-out")
+                .attr("transform", "rotate(" + settleRotation + ")")
+                .transition()
+                .duration(320)
+                .ease("cubic-in-out")
+                .attr("transform", "rotate(" + rotation + ")")
+                .each("end", function () {
+                    d3.select(".slice:nth-child(" + (picked + 2) + ") path")
+                        .attr("fill-opacity","0.5")
+                        .attr("fill", "#e9e9e9");
+
+                    oldrotation = rotation;
+                    console.log('finished!', rotation);
+                    if (typeof url === 'function') {
+                        url();
+                    } else {
+                        window.location.href = url;
+                    }
+                });
         });
 }
 
@@ -169,7 +182,7 @@ function playSound() {
 }
 
 function rotTween(to) {
-    let i = d3.interpolate(oldrotation % 360, rotation);
+    let i = d3.interpolate(oldrotation, rotation);
     return function (t) {
         // playSound();
         return "rotate(" + i(t) + ")";
