@@ -4,12 +4,11 @@ Production gateway for the public wheel at `spinberkat.com`.
 
 The gateway keeps the Laravel source code, admin panel, and database on
 the isolated `/spinberkat` instance on `undianspin.com`. It forwards public
-wheel requests, rewrites the instance URL to the client domain, and blocks
-admin/authentication paths on the client domain.
+wheel and admin requests while rewriting the instance URL to the client
+domain.
 
-The client admin is intentionally accessed directly at
-`https://undianspin.com/spinberkat/admin` so it never passes through the
-client-controlled VPS.
+The client admin is available at `https://spinberkat.com/admin`; its PHP
+source and database remain on the owner VPS.
 
 Deploy `index.php` and `.htaccess` to the client domain's `public_html`.
 The upstream origin, instance base path, and public origin are constants at

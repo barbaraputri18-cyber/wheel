@@ -15,11 +15,6 @@ if ($requestPath === '/__gateway_health') {
     exit;
 }
 
-if (preg_match('#^/(admin|login|logout|password)(?:/|$)#i', $requestPath)) {
-    http_response_code(404);
-    exit('Not Found');
-}
-
 $upstreamUrl = UPSTREAM_ORIGIN . UPSTREAM_BASE_PATH . $requestUri;
 $method = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
 $responseHeaders = [];
