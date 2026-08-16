@@ -40,7 +40,7 @@
   function loadWheelScript() {
     return new Promise(function (resolve, reject) {
       var script = document.createElement('script');
-      script.src = '/assets/wheel/js/script.js?version=2';
+      script.src = '/assets/wheel/js/script.js?version=3';
       script.onload = resolve;
       script.onerror = reject;
       document.body.appendChild(script);

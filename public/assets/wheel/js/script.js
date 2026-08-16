@@ -16,6 +16,10 @@ let audio = new Audio(music);
 let svg = d3.select('#chart')
     .append("svg")
     .data([prizes])
+    .attr("viewBox", "0 0 800 800")
+    .attr("preserveAspectRatio", "xMidYMid meet")
+    .attr("width", "100%")
+    .attr("height", "auto")
 
 let container = svg.append("g")
     .attr("class", "chartholder")

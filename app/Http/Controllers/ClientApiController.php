@@ -20,7 +20,7 @@ class ClientApiController extends Controller
 
         return response()->json([
             'data' => [
-                'brand' => Helper::content(),
+                'brand' => $this->brandData(),
                 'prizes' => $prizes->map(function ($prize) use ($total) {
                     return [
                         'id' => (int) $prize->id,
@@ -106,5 +106,32 @@ class ClientApiController extends Controller
                 'prize' => (string) $history['prize'],
             ];
         })->values();
+    }
+
+    private function brandData()
+    {
+        $brand = Helper::content();
+
+        foreach ($brand as $key => $value) {
+            if ($key === 'name' || !is_string($value)) {
+                continue;
+            }
+
+            $host = parse_url($value, PHP_URL_HOST);
+            $path = parse_url($value, PHP_URL_PATH);
+            if ($host && strcasecmp($host, 'undianspin.com') !== 0) {
+                continue;
+            }
+
+            if (is_string($path) && strpos($path, '/spinberkat/') === 0) {
+                $path = substr($path, strlen('/spinberkat'));
+            }
+
+            if (is_string($path) && $path !== '') {
+                $brand[$key] = $path[0] === '/' ? $path : '/' . $path;
+            }
+        }
+
+        return $brand;
     }
 }
