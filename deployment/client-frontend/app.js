@@ -6,6 +6,22 @@
   var spinButton = document.getElementById('spin-button');
   var homeAudio = document.getElementById('home-audio');
 
+  document.addEventListener('contextmenu', function (event) {
+    event.preventDefault();
+  });
+
+  document.addEventListener('keydown', function (event) {
+    var key = String(event.key || '').toUpperCase();
+    var blocked = key === 'F12' ||
+      (event.ctrlKey && key === 'U') ||
+      (event.ctrlKey && event.shiftKey && ['I', 'J', 'C'].indexOf(key) !== -1);
+
+    if (blocked) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }, true);
+
   function escapeHtml(value) {
     return String(value || '').replace(/[&<>'"]/g, function (character) {
       return {'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[character];
